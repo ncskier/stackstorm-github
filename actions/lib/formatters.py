@@ -195,9 +195,9 @@ def contents_to_dict(contents, decode=False):
         contents = [contents]
 
     result = []
-    data = {}
 
     for item in contents:
+        data = {}
         item_type = item.type
         data['type'] = item_type
         if item_type == 'symlink':
