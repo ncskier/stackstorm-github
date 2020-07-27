@@ -2,7 +2,6 @@ from github import Github
 import requests
 from bs4 import BeautifulSoup
 import json
-import json
 from st2client.client import Client
 from st2client.models import KeyValuePair
 
