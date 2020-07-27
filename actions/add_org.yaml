@@ -1,0 +1,24 @@
+---
+name: add_org
+runner_type: "python-script"
+pack: github
+description: "Add an organization."
+enabled: true
+entry_point: "add_org.py"
+parameters:
+  url:
+    type: "string"
+    required: true
+    description: "base AIP url."
+  github_type:
+    type: "string"
+    required: true
+    description: "type of github online or enterprise"
+  token:
+    type: "string"
+    required: true
+    description: "API token for the organization"
+  user:
+    type: "string"
+    required: true
+    description: "User / organization name."

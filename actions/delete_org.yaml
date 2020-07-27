@@ -1,0 +1,16 @@
+---
+name: delete_org
+runner_type: "python-script"
+pack: github
+description: "delete an organization."
+enabled: true
+entry_point: "delete_org.py"
+parameters:
+  url:
+    type: "string"
+    required: true
+    description: "base AIP url."
+  user:
+    type: "string"
+    required: true
+    description: "User / organization name."
