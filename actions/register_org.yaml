@@ -17,7 +17,7 @@ parameters:
   token:
     type: "string"
     required: true
-    description: "API token for the member of the organization"
+    description: "API token for a member of the organization"
   user:
     type: "string"
     required: true

@@ -2,7 +2,7 @@
 name: delete_registered_org
 runner_type: "python-script"
 pack: github
-description: "delete registered an organization."
+description: "delete registered organization."
 enabled: true
 entry_point: "delete_registered_org.py"
 parameters:
