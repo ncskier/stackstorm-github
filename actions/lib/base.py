@@ -47,8 +47,8 @@ class BaseGithubAction(Action):
             dict=json.loads(gitorgs.value)
         else:
             dict={}
-        if org.find('@') == -1:
-            org = org + '@' + self.base_url
+        if org.find('|') == -1:
+            org = org + '|' + self.base_url
         if org in dict:
             org = dict[org]
             self.token = org['token']
