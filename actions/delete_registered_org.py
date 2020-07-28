@@ -18,8 +18,8 @@ class DeleteOrgAction(BaseGithubAction):
         else:
             dict={}
 
-        if user+'@'+url in dict:
-            del dict[user+'@'+url]
+        if user+'|'+url in dict:
+            del dict[user+'|'+url]
         gitorgs=json.dumps(dict)
 
         client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=True))

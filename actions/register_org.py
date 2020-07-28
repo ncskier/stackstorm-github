@@ -17,8 +17,8 @@ class AddOrgAction(BaseGithubAction):
             dict=json.loads(gitorgs.value)
         else:
             dict={}
-        org = {'urer': user, 'url': url, 'token': token, 'type': github_type}
-        dict[user+'@'+url]=org
+        org = {'user': user, 'url': url, 'token': token, 'type': github_type}
+        dict[user+'|'+url]=org
         gitorgs=json.dumps(dict)
 
         client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=True))

@@ -1,7 +1,0 @@
----
-name: list_org
-runner_type: "python-script"
-pack: github
-description: "list organizations."
-enabled: true
-entry_point: "list_orgs.py"

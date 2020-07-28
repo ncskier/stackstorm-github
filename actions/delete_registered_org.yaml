@@ -1,15 +1,15 @@
 ---
-name: delete_org
+name: delete_registered_org
 runner_type: "python-script"
 pack: github
-description: "delete an organization."
+description: "delete registered an organization."
 enabled: true
-entry_point: "delete_org.py"
+entry_point: "delete_registered_org.py"
 parameters:
   url:
     type: "string"
     required: true
-    description: "base AIP url."
+    description: "base API url."
   user:
     type: "string"
     required: true
