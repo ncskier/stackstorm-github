@@ -1,5 +1,6 @@
 import datetime
- 
+
+from github.GithubException import UnknownObjectException
 from lib.base import BaseGithubAction
 from lib.formatters import user_to_dict
 
@@ -10,7 +11,6 @@ __all__ = [
 
 class ListMembersAction(BaseGithubAction):
     def run(self, user,filter=None, role=None, limit=20):
-        org = self._client.get_organization(user)
 
         kwargs = {}
         if filter:
@@ -18,15 +18,19 @@ class ListMembersAction(BaseGithubAction):
         if role:
             kwargs['role'] = role
 
-        members = org.get_members(**kwargs)
-        members = list(members)
-
         result = []
-        for index, member in enumerate(members):
-            member = user_to_dict(user=member)
-            result.append(member)
+        try:
+            org = self._client.get_organization(user)
+            members = org.get_members(**kwargs)
+            members = list(members)
 
-            if (index + 1) >= limit:
-                break
+            for index, member in enumerate(members):
+                member = user_to_dict(user=member)
+                result.append(member)
+                if (index + 1) >= limit:
+                    break
+
+        except UnknownObjectException:
+            print("Organization not found")
 
         return result
