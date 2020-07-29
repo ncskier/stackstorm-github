@@ -22,3 +22,11 @@ parameters:
     type: "string"
     required: true
     description: "User / organization name."
+  repositories:
+    type: "array"
+    required: false
+    description: "Repositories for sensors."
+  event_type_whitelist:
+    type: "array"
+    required: false
+    description: "Events to be monitored."
