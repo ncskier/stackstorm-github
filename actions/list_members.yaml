@@ -8,7 +8,7 @@ entry_point: list_members.py
 parameters:
   user:
     type: "string"
-    description: "Organization name."
+    description: "User / Organization name."
     required: true
   filter:
     type: "string"

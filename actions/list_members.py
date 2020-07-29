@@ -31,6 +31,8 @@ class ListMembersAction(BaseGithubAction):
                     break
 
         except UnknownObjectException:
-            print("Organization not found")
+            member = self._client.get_user(user)
+            member = user_to_dict(user=member)
+            result.append(member)
 
         return result
