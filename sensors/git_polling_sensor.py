@@ -70,15 +70,15 @@ class GitPollingSensor(PollingSensor):
             user = client.get_user(user)
             for repo_name in repositories:
                 repository = {}
-                if org_name + ':' + repo_name + ':' + base_url in self._repositories_cache:
-                    self._repositories_cache[org_name + ':' + repo_name + ':' + base_url]['used'] = True
-                    repository = self._repositories_cache[org_name + ':' + repo_name + ':' + base_url]
+                if org_name + ':' + repo_name + ':' + config_base_url in self._repositories_cache:
+                    self._repositories_cache[org_name + ':' + repo_name + ':' + config_base_url]['used'] = True
+                    repository = self._repositories_cache[org_name + ':' + repo_name + ':' + config_base_url]
                     self._logger.debug('Repository found in cache: "%s/%s"' %(user, repo_name))
                 else:
                     repo = user.get_repo(repo_name)
                     repository['repository'] = repo
                     repository['used'] = True
-                    self._repositories_cache[org_name + ':' + repo_name + ':' + base_url] = repository
+                    self._repositories_cache[org_name + ':' + repo_name + ':' + config_base_url] = repository
                     self._logger.debug('Creating new repository: "%s/%s"' %(user, repo_name))
                 self._logger.debug('Processing dynamic repository: "%s/%s"' %(user, repo_name))
                 self._process_repository(name=repo_name,
