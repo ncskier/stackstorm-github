@@ -2,10 +2,6 @@ import six
 import eventlet
 from github import Github
 
-import json
-from st2client.client import Client
-from st2client.models import KeyValuePair
-
 from st2reactor.sensor.base import PollingSensor
 
 eventlet.monkey_patch(
@@ -34,8 +30,6 @@ class GithubRepositorySensor(PollingSensor):
         self._repositories = []
         self._last_event_ids = {}
         self.EVENT_TYPE_WHITELIST = []
-        self._st2client = Client()
-        self._repositories_cache = {}
 
     def setup(self):
         # Empty string '' is not ok but None is fine. (Sigh)
@@ -68,51 +62,9 @@ class GithubRepositorySensor(PollingSensor):
             self._logger.debug('Processing repository "%s"' %
                                (repository_name))
             self._process_repository(name=repository_name,
-                                     repository=repository_obj, whitelist=self.EVENT_TYPE_WHITELIST)
+                                     repository=repository_obj)
 
-        gitorgs = self._st2client.keys.get_by_name(name='git-orgs', decrypt=True)
-        if gitorgs:
-            orgs=json.loads(gitorgs.value)
-        else:
-            orgs={}
-        for org_name in orgs:
-            org = orgs[org_name]
-            if 'repositories' not in org:
-                continue
-            token = org['token']
-            user = org['user']
-            repositories = org['repositories']
-            event_type_whitelist = org.get('event_type_whitelist', [])
-
-            if org['type'] == 'online':
-                config_base_url = DEFAULT_API_URL
-            else:
-                config_base_url = org['url'] or None
-            client = Github(token or None, base_url=config_base_url)
-            user = client.get_user(user)
-            for repo_name in repositories:
-                repository = {}
-                if org_name+ ':' + repo_name in self._repositories_cache:
-                    self._repositories_cache[org_name + ':' + repo_name]['used'] = True
-                    repository = self._repositories_cache[org_name + ':' + repo_name]
-                    self._logger.debug('Repositorty found in cache: "%s/%s"' %(user, repo_name))
-                else:
-                    repo = user.get_repo(repo_name)
-                    repository['repository'] = repo
-                    repository['used'] = True
-                    self._repositories_cache[org_name+ ':' + repo_name] = repository
-                    self._logger.debug('Creating new repositorty: "%s/%s"' %(user, repo_name))
-                self._logger.debug('Processing dynamic repositor: "%s/%s"' %(user, repo_name))
-                self._process_repository(name=repo_name,
-                                         repository=repository['repository'], whitelist=event_type_whitelist)
-        for repo in list(self._repositories_cache):
-            if self._repositories_cache[repo]['used']:
-                self._repositories_cache[repo]['used'] = False
-            else:
-                del self._repositories_cache[repo]
-
-
-    def _process_repository(self, name, repository, whitelist):
+    def _process_repository(self, name, repository):
         """
         Retrieve events for the provided repository and dispatch triggers for
         new events.
@@ -123,8 +75,6 @@ class GithubRepositorySensor(PollingSensor):
         :param repository: Repository object.
         :type repository: :class:`Repository`
         """
-        self._logger.debug('in _process_repository "%s/%s"' %
-                               (name, repository))
         assert(isinstance(name, six.text_type))
 
         # Assume a default value of 30. Better for the sensor to operate with some
@@ -141,7 +91,7 @@ class GithubRepositorySensor(PollingSensor):
                 # This event has already been processed
                 continue
 
-            self._handle_event(repository=name, event=event, whitelist=whitelist or {})
+            self._handle_event(repository=name, event=event)
 
         if events:
             self._set_last_id(name=name, last_id=events[-1].id)
@@ -180,8 +130,8 @@ class GithubRepositorySensor(PollingSensor):
             key_name = 'last_id.%s' % (name)
             self._sensor_service.set_value(name=key_name, value=last_id)
 
-    def _handle_event(self, repository, event, whitelist):
-        if event.type not in whitelist:
+    def _handle_event(self, repository, event):
+        if event.type not in self.EVENT_TYPE_WHITELIST:
             self._logger.debug('Skipping ignored event (type=%s)' % (event.type))
             return
 
