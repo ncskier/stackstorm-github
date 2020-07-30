@@ -64,6 +64,7 @@ class GitPollingSensor(PollingSensor):
                 if org['url']:
                     config_base_url = org['url']
                 else:
+                    self._logger.debug('URL is not configured for org: "%s"' % (user))
                     continue
                 
             client = Github(token or None, base_url=config_base_url)
