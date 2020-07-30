@@ -82,3 +82,27 @@ repository_sensor:
       description: "Maximum number of old events to retrieve"
       required: false
       default: 30
+activity_sensor:
+  description: "Sensor specific settings, with default github type."
+  type: "object"
+  required: false
+  additionalProperties: false
+  properties:
+    event_type_whitelist:
+      type: "array"
+      description: "Event types to watch for, e.g. IssuesEvent, PushEvent"
+      items:
+        type: "string"
+      required: false
+      default:
+        - "IssuesEvent"
+        - "IssueCommentEvent"
+        - "ForkEvent"
+        - "WatchEvent"
+        - "ReleaseEvent"
+        - "PushEvent"
+    count:
+      type: "integer"
+      description: "Maximum number of old events to retrieve"
+      required: false
+      default: 30
