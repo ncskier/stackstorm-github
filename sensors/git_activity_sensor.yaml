@@ -1,13 +1,13 @@
 ---
-class_name: "GitPollingSensor"
-entry_point: "git_polling_sensor.py"
-description: "Sensor which monitors Git repository by polling method"
+class_name: "GitActivitySensor"
+entry_point: "git_activity_sensor.py"
+description: "Sensor which monitors the git repository activities registered by register_org action"
 # requires authentication because of GitHub rate limiting
 # use default with auth or increase poll interval
 enabled: true
 poll_interval: 30
 trigger_types:
-  - name: "repository_activity"
+  - name: "activity_sensor"
     description: "Trigger which indicates a new activity in repository"
     payload_schema:
       type: "object"

@@ -22,12 +22,12 @@ DATE_FORMAT_STRING = '%Y-%m-%d %H:%M:%S'
 DEFAULT_API_URL = 'https://api.github.com'
 
 
-class GitPollingSensor(PollingSensor):
+class GitActivitySensor(PollingSensor):
     def __init__(self, sensor_service, config=None, poll_interval=None):
-        super(GitPollingSensor, self).__init__(sensor_service=sensor_service,
+        super(GitActivitySensor, self).__init__(sensor_service=sensor_service,
                                                      config=config,
                                                      poll_interval=poll_interval)
-        self._trigger_ref = 'github.repository_activity'
+        self._trigger_ref = 'github.activity_sensor'
         self._logger = self._sensor_service.get_logger(__name__)
 
         self._last_event_ids = {}
@@ -67,20 +67,23 @@ class GitPollingSensor(PollingSensor):
                     self._logger.debug('URL is not configured for org: "%s"' % (user))
                     continue
                 
-            client = Github(token or None, base_url=config_base_url)
-            user = client.get_user(user)
+            client = None 
+            userobj = None
             for repo_name in repositories:
                 repository = {}
-                if org_name + ':' + repo_name + ':' + config_base_url in self._repositories_cache:
-                    self._repositories_cache[org_name + ':' + repo_name + ':' + config_base_url]['used'] = True
-                    repository = self._repositories_cache[org_name + ':' + repo_name + ':' + config_base_url]
+                key = org_name + '|' + repo_name + '|' + config_base_url
+                if key in self._repositories_cache:
+                    repository = self._repositories_cache[key]
                     self._logger.debug('Repository found in cache: "%s/%s"' %(user, repo_name))
                 else:
-                    repo = user.get_repo(repo_name)
+                    if client == None:
+                        client = Github(token or None, base_url=config_base_url)
+                        userobj = client.get_user(user)
+                    repo = userobj.get_repo(repo_name)
                     repository['repository'] = repo
-                    repository['used'] = True
-                    self._repositories_cache[org_name + ':' + repo_name + ':' + config_base_url] = repository
+                    self._repositories_cache[key] = repository
                     self._logger.debug('Creating new repository: "%s/%s"' %(user, repo_name))
+                repository['used'] = True
                 self._logger.debug('Processing dynamic repository: "%s/%s"' %(user, repo_name))
                 self._process_repository(name=repo_name,
                                          repository=repository['repository'], whitelist=event_type_whitelist)
@@ -160,6 +163,7 @@ class GitPollingSensor(PollingSensor):
             self._sensor_service.set_value(name=key_name, value=last_id)
 
     def _handle_event(self, repository, event, whitelist):
+        self._logger.debug('_handle_event: whitelist %s' % (whitelist))
         if event.type not in whitelist:
             self._logger.debug('Skipping ignored event (type=%s)' % (event.type))
             return
