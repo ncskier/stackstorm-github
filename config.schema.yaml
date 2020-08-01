@@ -83,7 +83,7 @@ repository_sensor:
       required: false
       default: 30
 activity_sensor:
-  description: "This sensor works with git organization / repository registered via register_rog action.  The organizarion configured for repository_sensor should not be registered by the register_org action."
+  description: "This sensor works with git organization / repository registered via register_org action.  The organization configured for repository_sensor should not be registered by the register_org action."
   type: "object"
   required: false
   additionalProperties: false
