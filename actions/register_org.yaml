@@ -22,3 +22,17 @@ parameters:
     type: "string"
     required: true
     description: "User / organization name."
+  repositories:
+    type: "array"
+    items:
+      type: "string"
+    required: false
+    description: "List of names of the repository for sensors."
+  event_type_whitelist:
+    type: "array"
+    items:
+      type: "string"
+    required: false
+    description: "Events to be monitored by the activity sensor."
+    default: ["IssuesEvent", "IssueCommentEvent", ForkEvent", "WatchEvent", "ReleaseEvent", "PushEvent"]
+

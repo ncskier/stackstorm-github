@@ -1,0 +1,24 @@
+---
+class_name: "GitActivitySensor"
+entry_point: "git_activity_sensor.py"
+description: "Sensor which monitors the git repository activities registered by register_org action"
+# requires authentication because of GitHub rate limiting
+# use default with auth or increase poll interval
+enabled: true
+poll_interval: 30
+trigger_types:
+  - name: "activity_sensor"
+    description: "Trigger which indicates a new activity in repository"
+    payload_schema:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        created_at:
+          type: "string"
+        type:
+          type: "string"
+        actor:
+          type: "object"
+        payload:
+          type: "object"
