@@ -10,6 +10,10 @@ parameters:
     type: "string"
     description: "User / organization name."
     required: true
+  base_url:
+    type: "string"
+    description: "GitHub API url, include /api/v3 for GitHub Enterprise."
+    required: false
   visibility:
     type: "string"
     description: "Visibility (e.g. public / private)."

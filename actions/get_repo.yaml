@@ -14,4 +14,8 @@ parameters:
     type: "string"
     description: "Repository name."
     required: true
+  base_url:
+    type: "string"
+    description: "GitHub API url, include /api/v3 for GitHub Enterprise."
+    required: false
 

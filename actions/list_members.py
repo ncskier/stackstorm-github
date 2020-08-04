@@ -10,7 +10,7 @@ __all__ = [
 
 
 class ListMembersAction(BaseGithubAction):
-    def run(self, user,filter=None, role=None, limit=20):
+    def run(self, user, base_url, filter=None, role=None, limit=20):
 
         kwargs = {}
         if filter:
@@ -20,6 +20,7 @@ class ListMembersAction(BaseGithubAction):
 
         result = []
         try:
+            self._reset(user+'|'+base_url)
             org = self._client.get_organization(user)
             members = org.get_members(**kwargs)
             members = list(members)
