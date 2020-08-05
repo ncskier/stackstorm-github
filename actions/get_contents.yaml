@@ -2,6 +2,7 @@
 name: get_contents
 runner_type: python-script
 description: Gets the contents of a file or directory in a repository.
+pack: github
 enabled: true
 entry_point: get_contents.py
 parameters:
@@ -13,6 +14,10 @@ parameters:
     type: "string"
     description: "Repository name."
     required: true
+  base_url:
+    type: "string"
+    description: "GitHub API url, include /api/v3 for GitHub Enterprise."
+    required: false
   ref:
     type: "string"
     description: "Git ref."

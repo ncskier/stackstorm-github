@@ -2,6 +2,7 @@
 name: list_issues
 runner_type: python-script
 description: Retrieve a list of issues (including pull requests) for a particular repository.
+pack: github
 enabled: true
 entry_point: list_issues.py
 parameters:
@@ -13,6 +14,10 @@ parameters:
     type: "string"
     description: "Repository name."
     required: true
+  base_url:
+    type: "string"
+    description: "GitHub API url, include /api/v3 for GitHub Enterprise."
+    required: false
   filter:
     type: "string"
     description: "Filter string."
