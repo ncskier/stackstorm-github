@@ -11,7 +11,10 @@ __all__ = [
 class ListIssuesAction(BaseGithubAction):
     def run(self, user, repo, base_url, filter=None, state=None, sort=None,
             direction=None, since=None, limit=20):
-        self._reset(user+'|'+base_url)
+        if base_url == None:
+            self._reset(user)
+        else:
+            self._reset(user+'|'+base_url)
         user = self._client.get_user(user)
         repo = user.get_repo(repo)
 

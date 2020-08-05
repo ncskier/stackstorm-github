@@ -10,7 +10,10 @@ __all__ = [
 
 class ListReposAction(BaseGithubAction):
     def run(self, user, base_url, since=None, visibility='all', limit=20):
-        self._reset(user+'|'+base_url)
+        if base_url == None:
+            self._reset(user)
+        else:
+            self._reset(user+'|'+base_url)
         user = self._client.get_user(user)
 
         kwargs = {}

@@ -9,7 +9,10 @@ __all__ = [
 class GetContentsAction(BaseGithubAction):
     def run(self, user, repo, base_url, ref, path, decode=False):
 
-        self._reset(user+'|'+base_url)
+        if base_url == None:
+            self._reset(user)
+        else:
+            self._reset(user+'|'+base_url)
         user = self._client.get_user(user)
         repo = user.get_repo(repo)
         contents = repo.get_contents(path, ref=ref)

@@ -20,7 +20,10 @@ class ListMembersAction(BaseGithubAction):
 
         result = []
         try:
-            self._reset(user+'|'+base_url)
+            if base_url == None:
+                self._reset(user)
+            else:
+                self._reset(user+'|'+base_url)
             org = self._client.get_organization(user)
             members = org.get_members(**kwargs)
             members = list(members)
