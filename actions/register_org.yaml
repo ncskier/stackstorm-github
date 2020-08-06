@@ -8,10 +8,13 @@ entry_point: "register_org.py"
 parameters:
   url:
     type: "string"
-    required: true
+    required: false
     description: "base API url."
   github_type:
     type: "string"
+    enum:
+      - "online"
+      - "enterprise"
     required: true
     description: "type of github: online or enterprise"
   token:
