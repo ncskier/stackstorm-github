@@ -17,6 +17,7 @@ class DeleteOrgAction(BaseGithubAction):
             dict=json.loads(gitorgs.value)
         else:
             dict={}
+        user = user.strip()
         url = url.strip()
         if user+'|'+url in dict:
             del dict[user+'|'+url]
