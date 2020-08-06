@@ -10,10 +10,6 @@ parameters:
     type: "string"
     required: true
     description: "base API url."
-  github_type:
-    type: "string"
-    required: true
-    description: "type of github: online or enterprise"
   token:
     type: "string"
     required: true

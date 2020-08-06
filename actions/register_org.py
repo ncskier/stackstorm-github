@@ -9,7 +9,7 @@ __all__ = [
 
 
 class AddOrgAction(BaseGithubAction):
-    def run(self, user, url, token, github_type, repositories, event_type_whitelist):
+    def run(self, user, url, token, repositories, event_type_whitelist):
 
         client = Client()
         gitorgs = client.keys.get_by_name(name='git-orgs', decrypt=True)
@@ -17,6 +17,7 @@ class AddOrgAction(BaseGithubAction):
             dict=json.loads(gitorgs.value)
         else:
             dict={}
+        github_type = 'online' if url.find('github.com') > -1 else 'enterprise'
         org = {'user': user, 'url': url, 'token': token, 'type': github_type, 'repositories': repositories, 'event_type_whitelist': event_type_whitelist}
         dict[user+'|'+url]=org
         gitorgs=json.dumps(dict)
