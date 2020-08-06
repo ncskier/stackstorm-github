@@ -48,7 +48,9 @@ class BaseGithubAction(Action):
         else:
             dict={}
         if org.find('|') == -1:
-            org = org + '|' + DEFAULT_API_URL
+            org = org + '|'
+        if org.endswith('|'):
+            org = org + DEFAULT_API_URL
         if org in dict:
             org = dict[org]
             self.token = org['token']
