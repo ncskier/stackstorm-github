@@ -7,6 +7,8 @@ __all__ = [
     'AddOrgAction'
 ]
 
+# Default Github API url
+DEFAULT_API_URL = 'https://api.github.com'
 
 class AddOrgAction(BaseGithubAction):
     def run(self, user, url, token, github_type, repositories, event_type_whitelist):
@@ -17,8 +19,14 @@ class AddOrgAction(BaseGithubAction):
             dict=json.loads(gitorgs.value)
         else:
             dict={}
+        
         user = user.strip()
         url = url.strip()
+
+        if len(url) == 0:
+            url = DEFAULT_API_URL
+            github_type = 'online'
+
         org = {'user': user, 'url': url, 'token': token, 'type': github_type, 'repositories': repositories, 'event_type_whitelist': event_type_whitelist}
         dict[user+'|'+url]=org
         gitorgs=json.dumps(dict)
