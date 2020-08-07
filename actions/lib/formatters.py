@@ -176,7 +176,7 @@ def user_to_dict(user):
     if not user:
         return None
 
-    result = {'name': user.name, 'login': user.login}
+    result = {'name': user.name, 'login': user.login, 'html_url': user.html_url}
     return result
 
 
