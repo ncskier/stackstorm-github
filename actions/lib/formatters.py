@@ -243,7 +243,7 @@ def repo_to_dict(repo):
     result['master_branch'] = repo.master_branch
     result['owner_name'] = repo.owner.name
     result['url'] = repo.url
-    result['base_url'] = repo.owner.url[0:repo.owner.url.index(repo.owner.login)-len('users')-1]
+    result['base_url'] = repo.owner.url[0:repo.owner.url.index(repo.owner.login)-len('/users')-1]
     
     return result
 
