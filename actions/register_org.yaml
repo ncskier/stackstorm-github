@@ -19,7 +19,7 @@ parameters:
     description: "type of github: online or enterprise"
   token:
     type: "string"
-    required: true
+    required: false
     description: "API token for a member of the organization"
   user:
     type: "string"

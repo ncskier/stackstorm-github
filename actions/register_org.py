@@ -28,12 +28,17 @@ class AddOrgAction(BaseGithubAction):
             url = DEFAULT_API_URL
             github_type = 'online'
 
+        if repositories == None:
+            repositories = []
+
         key = user + '|' + url
         org = dict.get(key)
 
         if org == None:
             org = {'user': user, 'url': url, 'token': token, 'type': github_type, 'repositories': repositories, 'event_type_whitelist': event_type_whitelist}
         else:
+            if token != None:
+                org['token'] = token
             org['repositories'] = list(set(org['repositories']).union(repositories))
             org['event_type_whitelist'] = list(set(org['event_type_whitelist']).union(event_type_whitelist))
 
