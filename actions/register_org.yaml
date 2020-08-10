@@ -37,5 +37,5 @@ parameters:
       type: "string"
     required: false
     description: "Events to be monitored by the activity sensor."
-    default: ["IssuesEvent", "IssueCommentEvent", ForkEvent", "WatchEvent", "ReleaseEvent", "PushEvent"]
+    default: ["IssuesEvent", "IssueCommentEvent", "ForkEvent", "WatchEvent", "ReleaseEvent", "PushEvent"]
 
