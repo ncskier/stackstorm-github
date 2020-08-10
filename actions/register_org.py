@@ -23,7 +23,7 @@ class AddOrgAction(BaseGithubAction):
         
         user = user.strip()
         url = (url or '').strip()
-        
+
         if len(url) == 0:
             url = DEFAULT_API_URL
             github_type = 'online'
