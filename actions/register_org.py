@@ -22,7 +22,9 @@ class AddOrgAction(BaseGithubAction):
             dict={}
         
         user = user.strip()
-        url = url.strip()
+        
+        if url != None:
+            url = url.strip()
 
         if len(url) == 0:
             url = DEFAULT_API_URL
