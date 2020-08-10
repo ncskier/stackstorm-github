@@ -21,4 +21,4 @@ class ListOrgsAction(BaseGithubAction):
             dict={}
         results = filter_orgs(dict)
 
-        return results
+        return list(results)
