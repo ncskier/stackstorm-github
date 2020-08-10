@@ -42,4 +42,4 @@ class AddOrgAction(BaseGithubAction):
 
         client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=True))
 
-        return filter_orgs(dict)
+        return list(filter_orgs(dict))

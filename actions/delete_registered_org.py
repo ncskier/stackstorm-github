@@ -2,6 +2,7 @@ from lib.base import BaseGithubAction
 import json
 from st2client.client import Client
 from st2client.models import KeyValuePair
+from lib.formatters import filter_orgs
 
 __all__ = [
     'DeleteOrgAction'
@@ -25,4 +26,4 @@ class DeleteOrgAction(BaseGithubAction):
 
         client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=True))
 
-        return list(dict.keys())
+        return list(filter_orgs(dict))
