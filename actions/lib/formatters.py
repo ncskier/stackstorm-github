@@ -282,3 +282,9 @@ def ref_to_dict(ref):
         'url': ref.url
     }
     return result
+
+def filter_org(org):
+    return { 'type': org['type'], 'repositories': org['repositories'], 'event_type_whitelist': org['event_type_whitelist'] }
+
+def filter_orgs(orgs):
+    return map(lambda org: (org[0], filter_org(org[1])), orgs.items())

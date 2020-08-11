@@ -2,6 +2,7 @@ from lib.base import BaseGithubAction
 import json
 from st2client.client import Client
 from st2client.models import KeyValuePair
+from lib.formatters import filter_org
 
 __all__ = [
     'AddOrgAction'
@@ -21,16 +22,29 @@ class AddOrgAction(BaseGithubAction):
             dict={}
         
         user = user.strip()
-        url = url.strip()
+        url = (url or '').strip()
 
         if len(url) == 0:
             url = DEFAULT_API_URL
             github_type = 'online'
 
-        org = {'user': user, 'url': url, 'token': token, 'type': github_type, 'repositories': repositories, 'event_type_whitelist': event_type_whitelist}
-        dict[user+'|'+url]=org
+        if repositories == None:
+            repositories = []
+
+        key = user + '|' + url
+        org = dict.get(key)
+
+        if org == None:
+            org = {'user': user, 'url': url, 'token': token, 'type': github_type, 'repositories': repositories, 'event_type_whitelist': event_type_whitelist}
+        else:
+            if token != None:
+                org['token'] = token
+            org['repositories'] = list(set(org['repositories']).union(repositories))
+            org['event_type_whitelist'] = list(set(org['event_type_whitelist']).union(event_type_whitelist))
+
+        dict[key]=org
         gitorgs=json.dumps(dict)
 
         client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=True))
 
-        return list(dict.keys())
+        return list((key, filter_org(org)))
