@@ -113,12 +113,14 @@ class GitActivitySensor(PollingSensor):
         # default value in this case rather than raise an exception.
         count = self._config['repository_sensor'].get('count', 30)
 
-        events = repository.get_events()[:count]
-        events = list(reversed(list(events)))
-
+        events = repository.get_events().reversed
         last_event_id = self._get_last_id(name=name)
 
+        i = 0
         for event in events:
+            i = i+1
+            if i > count:
+                break        
             if last_event_id and int(event.id) <= int(last_event_id):
                 # This event has already been processed
                 continue
