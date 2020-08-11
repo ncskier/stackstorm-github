@@ -14,7 +14,7 @@ class ListOrgsAction(BaseGithubAction):
         results = []
 
         client = Client()
-        gitorgs = client.keys.get_by_name(name='git-orgs', decrypt=True)
+        gitorgs = client.keys.get_by_name(name='git-orgs', decrypt=False)
         if gitorgs:
             dict=json.loads(gitorgs.value)
         else:

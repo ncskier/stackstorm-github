@@ -15,7 +15,7 @@ class AddOrgAction(BaseGithubAction):
     def run(self, user, url, token, github_type, repositories, event_type_whitelist):
 
         client = Client()
-        gitorgs = client.keys.get_by_name(name='git-orgs', decrypt=True)
+        gitorgs = client.keys.get_by_name(name='git-orgs', decrypt=False)
         if gitorgs:
             dict=json.loads(gitorgs.value)
         else:
@@ -45,6 +45,6 @@ class AddOrgAction(BaseGithubAction):
         dict[key]=org
         gitorgs=json.dumps(dict)
 
-        client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=True))
+        client.keys.update(KeyValuePair(name='git-orgs', value=gitorgs, secret=False))
 
         return list((key, filter_org(org)))
