@@ -109,24 +109,28 @@ class GitActivitySensor(PollingSensor):
                                (name, repository))
         assert(isinstance(name, six.text_type))
 
+        last_event_id = self._get_last_id(name=name)
+
         # Assume a default value of 30. Better for the sensor to operate with some
         # default value in this case rather than raise an exception.
         count = self._config['repository_sensor'].get('count', 30)
-
-        events = repository.get_events()[:count]
-        events = list(reversed(list(events)))
-
-        last_event_id = self._get_last_id(name=name)
-
+        events = repository.get_events()
+        event_list = []
         for event in events:
+            if len(event_list) == count:
+                break
+            event_list.append(event)
+
+        event_list.reverse()
+        for event in event_list:
             if last_event_id and int(event.id) <= int(last_event_id):
                 # This event has already been processed
                 continue
 
             self._handle_event(repository=name, event=event, whitelist=whitelist or {})
 
-        if events:
-            self._set_last_id(name=name, last_id=events[-1].id)
+        if len(event_list):
+            self._set_last_id(name=name, last_id=event_list[-1].id)
 
     def cleanup(self):
         pass
