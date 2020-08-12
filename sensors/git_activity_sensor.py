@@ -129,8 +129,8 @@ class GitActivitySensor(PollingSensor):
 
             self._handle_event(repository=name, event=event, whitelist=whitelist or {})
 
-        if events:
-            self._set_last_id(name=name, last_id=events[-1].id)
+        if len(event_list):
+            self._set_last_id(name=name, last_id=event_list[-1].id)
 
     def cleanup(self):
         pass
