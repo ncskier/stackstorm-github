@@ -75,6 +75,7 @@ def issue_to_dict(issue):
     result['title'] = issue.title
     result['body'] = issue.body
     result['url'] = issue.html_url
+    result['html_url'] = issue.html_url
     result['state'] = issue.state
     result['is_pull_request'] = is_pull_request
 
@@ -116,6 +117,7 @@ def pull_to_dict(pull):
     result['title'] = pull.title
     result['body'] = pull.body
     result['url'] = pull.html_url
+    result['html_url'] = pull.html_url
     result['base'] = pull.base.ref
     result['head'] = pull.head.ref
     result['state'] = pull.state
