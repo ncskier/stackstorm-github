@@ -117,9 +117,9 @@ class GitActivitySensor(PollingSensor):
         events = repository.get_events()
         event_list = []
         for event in events:
-            event_list.append(event)
-            if len(event_list) > count:
+            if len(event_list) == count:
                 break
+            event_list.append(event)
 
         event_list.reverse()
         for event in event_list:
