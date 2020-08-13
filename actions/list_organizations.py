@@ -20,7 +20,7 @@ class ListOrganizationsAction(BaseGithubAction):
         if since:
             kwargs['since'] = datetime.datetime.fromtimestamp(since)
 
-        repos = user.get_repos()
+        repos = user.get_orgs()
         repos = list(repos)
 
         return repos
