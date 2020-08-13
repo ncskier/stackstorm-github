@@ -22,7 +22,7 @@ class ListOrganizationsAction(BaseGithubAction):
 
         orgs = user.get_orgs()
         print(orgs)
-        print(orgs[0])
+        print(orgs.get_page(0))
         result = []
         for org in orgs:
             print(org)
