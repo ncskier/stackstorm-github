@@ -250,6 +250,13 @@ def repo_to_dict(repo):
 
     return result
 
+def org_to_dict(org):
+    result = {}
+
+    result['login'] = org.login
+
+    return result
+
 
 def decode_base64(data):
     """Decode base64, padding being optional.

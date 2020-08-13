@@ -1,6 +1,7 @@
 import datetime
 
 from lib.base import BaseGithubAction
+from lib.formatters import org_to_dict
 
 __all__ = [
     'ListOrganizationsAction'
@@ -22,11 +23,20 @@ class ListOrganizationsAction(BaseGithubAction):
 
         orgs = user.get_orgs()
         print(orgs)
-        print(orgs.get_page(0))
-        result = []
-        for org in orgs:
-            print(org)
-            result.append(org)
+        #print(orgs.get_page(0))
+        #result = []
+#        for org in orgs:
+#            print(org)
+#            result.append(org)
         #repos = list(repos)
+
+ #       return result
+        result = []
+        for index, org in enumerate(orgs):
+            org = org_to_dict(org=org)
+            result.append(org)
+
+            if (index + 1) >= limit:
+                break
 
         return result
