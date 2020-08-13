@@ -23,11 +23,4 @@ class ListOrganizationsAction(BaseGithubAction):
         organizations = user.get_orgs(**kwargs)
         organizations = list(organizations)
 
-        result = []
-        for index, organization in enumerate(organizations):
-            result.append(organization)
-
-            if (index + 1) >= limit:
-                break
-
-        return result
+        return organizations
