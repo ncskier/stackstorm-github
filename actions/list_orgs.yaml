@@ -14,5 +14,10 @@ parameters:
     type: "string"
     description: "GitHub API url, include /api/v3 for GitHub Enterprise."
     required: false
+  limit:
+    type: "number"
+    description: "Maximum number of orgs to return."
+    required: false
+    default: 20
 
 
