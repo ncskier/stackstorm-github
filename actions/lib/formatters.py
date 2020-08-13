@@ -260,6 +260,7 @@ def org_to_dict(org):
     result['updated_at'] = org.updated_at.isoformat()
     result['html_url'] = org.html_url
     result['repos_url'] = org.repos_url
+    result['url'] = org.url
 
     return result
 
