@@ -21,9 +21,11 @@ class ListOrganizationsAction(BaseGithubAction):
             kwargs['since'] = datetime.datetime.fromtimestamp(since)
 
         orgs = user.get_orgs()
-
+        print(orgs)
+        print(orgs[0])
         result = []
         for org in orgs:
+            print(org)
             result.append(org)
         #repos = list(repos)
 
