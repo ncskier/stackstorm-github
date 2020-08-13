@@ -1,7 +1,6 @@
 import datetime
 
 from lib.base import BaseGithubAction
-from lib.formatters import organization_to_dict
 
 __all__ = [
     'ListOrganizationsAction'
@@ -26,7 +25,6 @@ class ListOrganizationsAction(BaseGithubAction):
 
         result = []
         for index, organization in enumerate(organizations):
-            organization = organization_to_dict(organization=organization)
             result.append(organization)
 
             if (index + 1) >= limit:
