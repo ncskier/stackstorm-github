@@ -1,0 +1,20 @@
+---
+name: list_organizations
+runner_type: python-script
+description: Retrieve a list of organizations for a user.
+enabled: true
+pack: github
+entry_point: list_organizations.py
+parameters:
+  user:
+    type: "string"
+    description: "User / organization name."
+    required: true
+  base_url:
+    type: "string"
+    description: "GitHub API url, include /api/v3 for GitHub Enterprise."
+    required: false
+  since:
+    type: "number"
+    description: "Only returns issues newer than this timestamp."
+    required: false
