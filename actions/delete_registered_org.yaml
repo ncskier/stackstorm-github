@@ -12,5 +12,5 @@ parameters:
     description: "base API url."
   user:
     type: "string"
-    required: true
+    required: false
     description: "User / organization name."

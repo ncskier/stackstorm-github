@@ -20,8 +20,11 @@ class AddOrgAction(BaseGithubAction):
             dict=json.loads(gitorgs.value)
         else:
             dict={}
-        
-        user = user.strip()
+
+        if user == None:
+            user = ""
+        else: 
+            user = user.strip()
         url = (url or '').strip()
 
         if len(url) == 0:

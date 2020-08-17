@@ -23,7 +23,7 @@ parameters:
     description: "API token for a member of the organization"
   user:
     type: "string"
-    required: true
+    required: false
     description: "User / organization name."
   repositories:
     type: "array"

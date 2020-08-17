@@ -13,9 +13,15 @@ class ListOrgsAction(BaseGithubAction):
         if base_url == None:
             self._reset(user)
         else:
-            self._reset(user+'|'+base_url)
-        user = self._client.get_user(user)
+            if user != None:
+                self._reset(user+'|'+base_url)
+            else:
+                self._reset('|'+base_url)
 
+        if user != None:
+            user = self._client.get_user(user)
+        else:
+            user = self._client.get_user()
         kwargs = {}
 
         orgs = user.get_orgs(**kwargs)

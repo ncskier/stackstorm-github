@@ -9,7 +9,7 @@ parameters:
   user:
     type: "string"
     description: "User name."
-    required: true
+    required: false
   base_url:
     type: "string"
     description: "GitHub API url, include /api/v3 for GitHub Enterprise."

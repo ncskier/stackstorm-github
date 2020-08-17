@@ -19,7 +19,10 @@ class DeleteOrgAction(BaseGithubAction):
         else:
             dict={}
 
-        user = user.strip()
+        if user == None:
+            user = ""
+        else:
+            user = user.strip()
         url = url.strip()
 
         key = user + '|' + url
