@@ -62,6 +62,9 @@ class BaseGithubAction(Action):
         else:
             self._client = Github(self.token, base_url=self.base_url)
 
+    def _temp_client(self, token, base_url):
+        return Github(token, token, base_url=base_url)
+
     def _web_session(self, web_url=DEFAULT_WEB_URL):
         """Returns a requests session to scrape off the web"""
         login_url = web_url + '/login'

@@ -9,12 +9,15 @@ __all__ = [
 
 
 class ListOrgsAction(BaseGithubAction):
-    def run(self, user, base_url, limit=20):
-        if base_url == None:
-            self._reset(user)
+    def run(self, user, base_url, token, limit=20):
+        if user == None:
+            user = self._temp_client(token, base_url).get_user()
         else:
-            self._reset(user+'|'+base_url)
-        user = self._client.get_user(user)
+            if base_url == None:
+                self._reset(user)
+            else:
+                self._reset(user+'|'+base_url)
+                user = self._client.get_user(user)
 
         kwargs = {}
 
