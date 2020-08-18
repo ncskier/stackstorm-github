@@ -238,6 +238,7 @@ def contents_to_dict(contents, decode=False):
 def repo_to_dict(repo):
     result = {}
 
+    result['id'] = repo.id
     result['name'] = repo.name
     result['language'] = repo.language
     result['default_branch'] = repo.default_branch
