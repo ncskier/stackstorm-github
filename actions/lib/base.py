@@ -63,7 +63,7 @@ class BaseGithubAction(Action):
             self._client = Github(self.token, base_url=self.base_url)
 
     def _temp_client(self, token, base_url):
-        if base_url == None or base_rul == '':
+        if base_url == None or base_url == '':
             base_url = self.config.get('base_url', DEFAULT_API_URL)
         return Github(token, token, base_url=base_url)
 
